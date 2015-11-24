@@ -41,7 +41,7 @@ describe "isup", ->
           expect(httpResponse.statusCode).to.equal(404)
         catch ex
           err = ex
-          
+
         stubs.restoreAll()
 
         done(err)

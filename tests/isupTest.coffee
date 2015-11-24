@@ -11,6 +11,7 @@ describe "IsUp", ->
     stubs.restoreAll()
 
   it "/isup route", ->
+    # TODO: Rename to isup. isup lower case all over.
     status = "yes"
     stubs.get("IsUp.findOne").returns({status: status})
 

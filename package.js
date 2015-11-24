@@ -20,7 +20,7 @@ Package.onUse(function(api) {
   // practicalmeteor packages
   api.use("practicalmeteor:core", "server");
 
-  api.addFiles('src/IsUp.coffee', "server");
+  api.addFiles('src/isup.coffee', "server");
   api.addFiles('src/router.coffee', "server");
 });
 
@@ -35,5 +35,5 @@ Package.onTest(function(api) {
 
   api.use('practicalmeteor:isup');
 
-  api.addFiles('src/tests/IsUpTest.coffee', "server");
+  api.addFiles('tests/isupTest.coffee', "client");
 });

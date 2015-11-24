@@ -17,8 +17,15 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use('ecmascript');
-  api.use('tinytest');
-  api.use('isup');
-  api.addFiles('isup-tests.js');
+  api.use("coffeescript");
+  api.use("http");
+
+  api.use(['practicalmeteor:mocha',
+          'practicalmeteor:sinon',
+          'practicalmeteor:chai',
+          'practicalmeteor:loglevel']);
+
+  api.use('practicalmeteor:isup');
+
+  api.addFiles('src/tests/IsUpTest.coffee', "server");
 });

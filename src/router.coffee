@@ -7,12 +7,12 @@ WebApp.connectHandlers.use "/isup", (req, res, next) ->
 
     doc = isup.findOne()
     statusCode = if doc?.isup? then 200 else 404
-    isup = doc?.isup || "404 Not found"
+    content = doc?.isup || "404 Not found"
     log.debug("statusCode", statusCode)
-    log.debug("isup", isup)
+    log.debug("isup", content)
 
     res.writeHead(statusCode, {'Content-Type': 'text/plain'})
-    res.write(isup)
+    res.write(content)
     res.end()
   finally
     log.return()

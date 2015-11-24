@@ -1,32 +1,48 @@
-log = new ObjectLogger("IsUpTests", "debug")
+log = new ObjectLogger("isupTests", "debug")
 
-describe "IsUp", ->
+describe "isup", ->
 
   beforeEach ->
-    @url = Meteor.absoluteUrl("/isup")
+
+    if Meteor.isClient
+      @url = window.location.protocol + "//" + window.location.host + "/isup"
+    else
+      @url = Meteor.absoluteUrl("isup")
+
     log.debug("url:", @url)
-    stubs.create("IsUp.findOne", IsUp, "findOne")
 
   afterEach ->
     stubs.restoreAll()
 
-  it "/isup route", ->
-    # TODO: Rename to isup. isup lower case all over.
-    status = "yes"
-    stubs.get("IsUp.findOne").returns({status: status})
+  if Meteor.isClient
+    it "/isup route", (done)->
 
-    httpResponse = HTTP.get(@url)
-    log.debug("httpResponse", httpResponse)
+      HTTP.get @url, (err, httpResponse)->
+        err = null
+        log.debug("httpResponse", httpResponse)
+        try
+          expect(httpResponse.content).to.equal("yes")
+          expect(httpResponse.statusCode).to.equal(200)
+        catch ex
+          err = ex
 
-    expect(httpResponse.content).to.equal(status)
-    expect(httpResponse.statusCode).to.equal(200)
+        done(err)
 
-  it "/isup route - 404 not found", (done)->
+  if Meteor.isServer
+    it "/isup route - 404 not found", (done)->
+      stubs.create("isup.findOne", isup, "findOne")
 
-    HTTP.get @url, (err, httpResponse)->
-      log.debug("httpResponse", httpResponse)
+      HTTP.get @url, (err, httpResponse)->
+        err = null
+        try
+          log.debug("httpResponse", httpResponse)
 
-      expect(httpResponse.content).to.match(/404/)
-      expect(httpResponse.statusCode).to.equal(404)
-      done()
+          expect(httpResponse.content).to.match(/404/)
+          expect(httpResponse.statusCode).to.equal(404)
+        catch ex
+          err = ex
+          
+        stubs.restoreAll()
+
+        done(err)
 

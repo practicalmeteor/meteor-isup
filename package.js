@@ -35,5 +35,5 @@ Package.onTest(function(api) {
 
   api.use('practicalmeteor:isup');
 
-  api.addFiles('tests/isupTest.coffee', "client");
+  api.addFiles('tests/isupTest.coffee');
 });

@@ -11,9 +11,17 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.2.1');
-  api.use('ecmascript');
-  api.addFiles('isup.js');
+
+  // Meteor core packages
+  api.use('coffeescript', "server");
+  api.use('mongo', "server");
+  api.use('webapp', 'server');
+
+  // practicalmeteor packages
+  api.use("practicalmeteor:core", "server");
+
+  api.addFiles('src/IsUp.coffee', "server");
+  api.addFiles('src/router.coffee', "server");
 });
 
 Package.onTest(function(api) {

@@ -2,19 +2,22 @@ log = new ObjectLogger("isupTests", "debug")
 
 describe "isup", ->
 
-  beforeEach ->
-
-    if Meteor.isClient
-      @url = window.location.protocol + "//" + window.location.host + "/isup"
-    else
-      @url = Meteor.absoluteUrl("isup")
-
-    log.debug("url:", @url)
-
-  afterEach ->
-    stubs.restoreAll()
+  if Meteor.isServer
+    Meteor.methods({
+      "createStub": ->
+        stubs.create("isup.findOne", isup, "findOne")
+        return true
+      "restoreStub": ->
+        stubs.restore("isup.findOne")
+    })
 
   if Meteor.isClient
+    beforeEach ->
+
+      @url = window.location.protocol + "//" + window.location.host + "/isup"
+      log.debug("url:", @url)
+
+
     it "/isup route", (done)->
 
       HTTP.get @url, (err, httpResponse)->
@@ -28,21 +31,23 @@ describe "isup", ->
 
         done(err)
 
-  if Meteor.isServer
     it "/isup route - 404 not found", (done)->
-      stubs.create("isup.findOne", isup, "findOne")
 
-      HTTP.get @url, (err, httpResponse)->
-        err = null
-        try
-          log.debug("httpResponse", httpResponse)
+      Meteor.call "createStub", (error, created)=>
+        expect(created).to.be.true
+        log.debug("stubCreated")
 
-          expect(httpResponse.content).to.match(/404/)
-          expect(httpResponse.statusCode).to.equal(404)
-        catch ex
-          err = ex
+        HTTP.get @url, (err, httpResponse)->
+          err = null
+          try
+            log.debug("httpResponse", httpResponse)
 
-        stubs.restoreAll()
+            expect(httpResponse.content).to.match(/404/)
+            expect(httpResponse.statusCode).to.equal(404)
+          catch ex
+            err = ex
 
-        done(err)
+          Meteor.call("restoreStub")
+
+          done(err)
 

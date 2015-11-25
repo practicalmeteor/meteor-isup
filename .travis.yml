@@ -13,4 +13,4 @@ before_install:
   - npm install -g spacejam
   - export PATH="$HOME/.meteor:$PATH"
 
-script: spacejam test-packages --mongo-url mongo://nouser:nopass@nohost:27017/nodb --driver-package practicalmeteor:mocha-console-reporter ./
+script: spacejam test-packages --mongo-url mongodb://nouser:nopass@nohost:27017/nodb --driver-package practicalmeteor:mocha-console-reporter ./

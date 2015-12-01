@@ -2,7 +2,7 @@ Package.describe({
   name: 'practicalmeteor:isup',
   version: '0.1.0',
   // Brief, one-line summary of the package.
-  summary: 'Adds a /isup route to verify your app is up and can fetch docs from mongodb. For use with website monitoring tools.',
+  summary: 'Adds a /isup route to verify your app is up and can fetch docs from mongodb.',
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/practicalmeteor/meteor-isup.git',
   // By default, Meteor will default to using README.md for documentation.

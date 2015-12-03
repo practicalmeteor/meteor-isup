@@ -13,4 +13,4 @@ before_install:
   - export PATH="$HOME/.meteor:$PATH"
   - npm install -g spacejam
 
-script: spacejam test-packages --driver-package practicalmeteor:mocha-console-reporter ./
+script: spacejam test-packages --driver-package practicalmeteor:mocha-console-runner ./

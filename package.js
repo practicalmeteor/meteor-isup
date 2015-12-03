@@ -20,7 +20,7 @@ Package.onUse(function(api) {
   api.use('webapp', 'server');
 
   // practicalmeteor packages
-  api.use("practicalmeteor:core", "server");
+  api.use("practicalmeteor:core@0.0.1", "server");
 
   api.addFiles('src/isup.coffee', "server");
   api.addFiles('src/router.coffee', "server");

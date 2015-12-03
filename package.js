@@ -11,6 +11,8 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
+  
+  api.versionsFrom("1.1");
 
   // Meteor core packages
   api.use('coffeescript', "server");
